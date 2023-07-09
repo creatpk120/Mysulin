@@ -1,0 +1,96 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
+<%@ page import="java.util.Vector"%>
+<%@ page import="mysulin.Bean_Admin"%>
+<%@ page import="mysulin.Bean_Usage_a"%>
+<jsp:useBean id="myMgr" class="mysulin.Manager_Mysulin"/>
+<%
+	String usid = (String)session.getAttribute("idKey");
+	Bean_Usage_a uBean = myMgr.getUsage1(usid);
+%>
+
+<html>
+<head>
+	<title>usageWrite</title>
+	<link href="../admin/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+	function usage_inputCheck() {
+		if(document.usageFrm.usage_date.value == "") {
+			alert("처방일을 선택해주세요.");
+			document.usageFrm.usage_date.focus();
+			return;
+		}
+		if(document.usageFrm.usage_code.value == "") {
+			alert("인슐린코드를 입력해주세요.");
+			document.usageFrm.usage_code.focus();
+			return;
+		}
+		if(document.usageFrm.usage_name.value == "") {
+			alert("인슐린이름을 입력해주세요.");
+			document.usageFrm.usage_name.focus();
+			return;
+		}
+		if(document.usageFrm.usage_total.value == "") {
+			alert("처방량을 입력해주세요.");
+			document.usageFrm.usage_total.focus();
+			return;
+		}
+		document.usageFrm.action = "a_usageWriteProc.jsp";
+		document.usageFrm.submit();
+	}
+</script>
+</head>
+
+<body bgcolor="#F0F8FF" onLoad="usageFrm.usage_date.focus()">
+	<div align="center">
+		<br/><br/>
+		<form name="usageFrm" method="post" action="a_usageWriteProc.jsp">
+			<table align="center" cellpadding="5">
+				<tr>
+					<td bgcolor="#F0F8FF" align="center" valign="middle">
+						<table border="1" cellpadding="2" align="center" width="600">
+							<tr bgcolor="#6495ED" align="center">
+								<td align="center" colspan="3"><font color="#FFFFFF"><b>처방 목록 등록</b></font></td>
+							</tr>
+							<tr>
+								<td>담당자</td>
+								<td><input name="usage_usid" size="15" value="<%=usid%>" readonly></td>
+							</tr>
+							<tr>
+								<td>처방일</td>
+								<td><input type="date" name="usage_date" size="15"></td>
+							</tr>
+							<tr>
+								<td>인슐린코드</td>
+								<td><input name="usage_code" size="15"></td>
+							</tr>
+							<tr>
+								<td>인슐린이름</td>
+								<td><input name="usage_name" size="15"></td>
+							</tr>
+							<tr>
+								<td>처방량</td>
+								<td><input name="usage_total" size="15"></td>
+							</tr>
+							<tr>
+								<td>비고</td>
+								<td><input name="stock_note" size="15"></td>
+							</tr>
+							<tr>
+								<td colspan="3" align="center">
+									<input type="button" value="처방등록" onClick="usage_inputCheck()"> &nbsp;&nbsp;
+									<input type="reset" value="다시쓰기"> &nbsp;&nbsp;
+									<input type="button" value="뒤로가기" onClick = "history.go(-1)">
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+
+</html>
